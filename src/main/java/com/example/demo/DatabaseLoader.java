@@ -7,48 +7,31 @@ import org.springframework.stereotype.Component;
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 
-	private final InstrumentoRepository repositoryI;
-	private final MusicoRepository repositoryM;
-	private final BandaRepository repositoryB;
-	private final IntegranteRepository repositoryN;
+	private final ProductoRepository pro;
+	private final CategoriaRepository cat;
 
 	@Autowired
 	public DatabaseLoader(
-		InstrumentoRepository repositoryI,
-		MusicoRepository repositoryM,
-		BandaRepository repositoryB,
-		IntegranteRepository repositoryN
+		ProductoRepository pro,
+		CategoriaRepository cat
 		) {
-		this.repositoryI = repositoryI;
-		this.repositoryM = repositoryM;
-		this.repositoryB = repositoryB;
-		this.repositoryN = repositoryN;
+		this.pro=pro;
+		this.cat=cat;
 	}
 
 	@Override
 	public void run(String... strings) throws Exception {
-
-		this.repositoryI.save(new Instrumento("Guitarra", "Cuerda", "de madera, con caja de resonancia, 6 cuerdas templadas"));
-		this.repositoryI.save(new Instrumento("Ukelele","Cuerda","de madera, con caja de resonancia pequeña, 4 cuerdas templadas"));
-		this.repositoryI.save(new Instrumento("Melódica","Viento","teclado pequeño de 2 octavas, sonorizado por soplido"));
-		Instrumento iVoz = new Instrumento("Voz","Viento",".");
-		this.repositoryI.save(iVoz);
-		Instrumento iGuitarraElectrica = new Instrumento("Guitarra Electrica","Electrónico", ".");
-		this.repositoryI.save(iGuitarraElectrica);
-		this.repositoryI.save(new Instrumento("Batería","Percusión","."));
-
-		this.repositoryM.save(new Musico("Daniel F"));
-		Musico mFreddy = new Musico("Freddy");
-		this.repositoryM.save(mFreddy);
-		Musico mBrian = new Musico("Brian");
-		this.repositoryM.save(mBrian);
-
-		Banda bQueen = new Banda("Queen");
-		this.repositoryB.save(bQueen);
-
-		this.repositoryN.save(new Integrante(bQueen, mFreddy, iVoz));
-		this.repositoryN.save(new Integrante(bQueen, mBrian, iGuitarraElectrica));
-
-
+		Categoria categoria1=new Categoria("Deportes");
+		Categoria categor2=new Categoria("Armario");
+		this.cat.save(categoria1);
+		this.cat.save(categor2);
+		Producto zapatillas=new Producto("Zapattillas Start",30.50f,categoria1);
+		Producto chimpunes=new Producto("Chimpunes",99.99f,categoria1);
+		Producto vestido=new Producto("Vestido Azul",45.50f,categor2);
+		Producto sunga=new Producto("Sunga",15.50f,categor2);
+		this.pro.save(zapatillas);
+		this.pro.save(chimpunes);
+		this.pro.save(vestido);
+		this.pro.save(sunga);
 	}
 }
